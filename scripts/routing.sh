@@ -8,13 +8,13 @@ set -xe
 
 # ----------------------- Forward actions for Action Selector ---------------------------
 # member-ref: 1
-psabpf-ctl action-selector add_member pipe "$PIPELINE" DemoIngress_as id 1 \
+psabpf-ctl action-selector add-member pipe "$PIPELINE" DemoIngress_as action id 1 \
         data "$SWITCH_SERVER1_PORT_ID" "$SWITCH_SERVER1_PORT_MAC" "$SERVER1_MAC"
 # member-ref: 2
-psabpf-ctl action-selector add_member pipe "$PIPELINE" DemoIngress_as id 1 \
+psabpf-ctl action-selector add-member pipe "$PIPELINE" DemoIngress_as action id 1 \
         data "$SWITCH_SERVER2_PORT_ID" "$SWITCH_SERVER2_PORT_MAC" "$SERVER2_MAC"
 # member-ref: 3
-psabpf-ctl action-selector add_member pipe "$PIPELINE" DemoIngress_as id 1 \
+psabpf-ctl action-selector add-member pipe "$PIPELINE" DemoIngress_as action id 1 \
         data "$SWITCH_CLIENT_PORT_ID" "$SWITCH_CLIENT_PORT_MAC" "$CLIENT_MAC"
 
 # ----------------------- Routing table -------------------------------------------------
@@ -26,11 +26,11 @@ psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_routing ref key "$CLIENT_I
 # ----------------------- ARP responses for requests ------------------------------------
 # Always respond with port MAC for whole subnet
 # ARP reques - opcode 1
-psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 id 2 key "$SWITCH_SERVER1_PORT_ID" 1 "$SERVER1_IP/$SERVER1_IP_PREFIX" \
+psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 action id 2 key "$SWITCH_SERVER1_PORT_ID" 1 "$SERVER1_IP/$SERVER1_IP_PREFIX" \
         data "$SWITCH_SERVER1_PORT_MAC"
-psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 id 2 key "$SWITCH_SERVER2_PORT_ID" 1 "$SERVER2_IP/$SERVER2_IP_PREFIX" \
+psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 action id 2 key "$SWITCH_SERVER2_PORT_ID" 1 "$SERVER2_IP/$SERVER2_IP_PREFIX" \
         data "$SWITCH_SERVER2_PORT_MAC"
-psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 id 2 key "$SWITCH_CLIENT_PORT_ID" 1 "$CLIENT_IP/$CLIENT_IP_PREFIX" \
+psabpf-ctl table add pipe "$PIPELINE" DemoIngress_tbl_arp_ipv4 action id 2 key "$SWITCH_CLIENT_PORT_ID" 1 "$CLIENT_IP/$CLIENT_IP_PREFIX" \
         data "$SWITCH_SERVER2_PORT_MAC"
 
 echo "Routing rules inserted successfully!"

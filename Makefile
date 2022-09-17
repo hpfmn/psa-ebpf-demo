@@ -1,4 +1,4 @@
-P4C :=
+P4C_REPO := /home/p4/p4c
 
 start:
 	@./scripts/start-infra.sh
